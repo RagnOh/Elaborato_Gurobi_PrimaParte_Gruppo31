@@ -1,0 +1,19 @@
+GRUPPO 31
+Componenti: Trovato Eleonora,  Ragnoli Michele
+
+
+QUESITO I:funzione obbiettivo = 
+soluzione di base ottima = 
+variabili in base:
+coefficenti di costo ridotto:
+soluzione ottima multipla: 
+soluzione ottima degenere: 
+motivazione: 
+
+QUESITO II:funzione obbiettivo duale = 
+soluzione di base ottima duale: 
+sensitività: 
+
+QUESITO III:soluzione di base ottima multipla :
+soluzione di base duale associata :
+soluzione di base duale associata è ammissibile: 

@@ -4,6 +4,7 @@ import gurobi.GRB.DoubleAttr;
 import gurobi.GRB.IntAttr;
 import gurobi.GRB.IntParam;
 import gurobi.GRB.StringAttr;
+
 public class MainElaborato {
 
 
@@ -114,7 +115,8 @@ public class MainElaborato {
 			System.out.println("Valore f.o: "+funzioneObiettivo);
 			
 			
-			
+			PrintData p1= new PrintData(31, "Trovato Eleonora","Ragnoli Michele" );
+			p1.stampaDati();
 			
 			
 			
