@@ -2,18 +2,25 @@ GRUPPO 31
 Componenti: Trovato Eleonora,  Ragnoli Michele
 
 
-QUESITO I:funzione obbiettivo = 
-soluzione di base ottima = 
-variabili in base:
-coefficenti di costo ridotto:
-soluzione ottima multipla: 
-soluzione ottima degenere: 
+QUESITO I:
+funzione obbiettivo = 140.44
+soluzione di base ottima = 2.65, 0.0, 13.656666666666666, 4.71, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 23.9, 0.0, 32.31333333333333, 
+variabili in base:1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 
+coefficenti di costo ridotto:0.0, -0.0, 0.0, 0.0, -14.32, 0.0, -21.799999999999997, -32.76, -9.4, -6.4399999999999995, 2.0, -0.0, -0.0, -4.8, -0.0, 
+soluzione ottima multipla: Si
+soluzione ottima degenere: NO
 motivazione: 
+ciao come va
+ciao
+ciaone;
 
-QUESITO II:funzione obbiettivo duale = 
-soluzione di base ottima duale: 
-sensitività: 
 
-QUESITO III:soluzione di base ottima multipla :
+QUESITO II:
+funzione obbiettivo duale = 140.44
+soluzione di base ottima duale: 9.4, 6.4399999999999995, -2.0, 0.0, 0.0, 4.8, 0.0, -0.0, 0.0, -0.0, -0.0, 14.32, -0.0, 21.799999999999997, 32.76, 
+sensitività: 0.0<= DELTA <=0.0
+
+QUESITO III:
+soluzione di base ottima multipla :
 soluzione di base duale associata :
-soluzione di base duale associata è ammissibile: 
+soluzione di base duale associata è ammissibile: null

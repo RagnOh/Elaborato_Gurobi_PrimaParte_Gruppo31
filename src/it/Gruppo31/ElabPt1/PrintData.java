@@ -1,7 +1,9 @@
 package it.Gruppo31.ElabPt1;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 public class PrintData {
 
 	private BufferedWriter bufWriter;
+	private BufferedReader reader;
 	
 	//-----------------------------------------------------------------------
 	private int numGruppo;
@@ -18,23 +21,23 @@ public class PrintData {
 	private String nome2;
 	
 	//-----------------------------------------------------------------------
-	private int valFObbiettivo;
+	private double valFObbiettivo;
 	private String ottimaMultipla;
 	private String ottimaDegenere;
-	private ArrayList<Integer>solBaseOttima=new ArrayList<Integer>();
-	private ArrayList<Integer>varDiBase=new ArrayList<Integer>();
-	private ArrayList<Integer>coeffCostoRidotto= new ArrayList<Integer>();
+	private ArrayList<Double>solBaseOttima=new ArrayList<Double>();
+	private ArrayList<Double>varDiBase=new ArrayList<Double>();
+	private ArrayList<Double>coeffCostoRidotto= new ArrayList<Double>();
 	
 	//------------------------------------------------------------------------
-	private int valFObbDuale;
-	private int sensUp;
-	private int sensLow;
-	private ArrayList<Integer>solBaseOttimaDuale=new ArrayList<Integer>();
+	private double valFObbDuale;
+	private double sensUp;
+	private double sensLow;
+	private ArrayList<Double>solBaseOttimaDuale=new ArrayList<Double>();
 	
 	//------------------------------------------------------------------------
 	private String solBaseAssoAmmis;
-	private ArrayList<Integer>solBaseOttiMult=new ArrayList<Integer>();
-	private ArrayList<Integer>solBaseDualeAsso=new ArrayList<Integer>();
+	private ArrayList<Double>solBaseOttiMult=new ArrayList<Double>();
+	private ArrayList<Double>solBaseDualeAsso=new ArrayList<Double>();
 	
 	
 	
@@ -49,25 +52,25 @@ public class PrintData {
 	}
 	
 	//------------------------------------------------------------------
-	public void setFObbiettivo(int i) {
+	public void setFObbiettivo(double funzioneObiettivo) {
 		
-		   valFObbiettivo=i;
+		   valFObbiettivo=funzioneObiettivo;
 	}
 	
 	//------------------------------------------------------------------
-	public void setSolBaseOttima(int i) {
+	public void setSolBaseOttima(double i) {
 		
 		   solBaseOttima.add(i);
 	}
 	
 	//------------------------------------------------------------------
-	public void setVarInBase(int i) {
+	public void setVarInBase(double i) {
 		
 		    varDiBase.add(i);
 	}
 	
 	//------------------------------------------------------------------
-	public void setCoeffCosto(int i) {
+	public void setCoeffCosto(double i) {
 		
 		    coeffCostoRidotto.add(i);
 	}
@@ -75,48 +78,48 @@ public class PrintData {
 	//------------------------------------------------------------------
 	public void setSolOttMult(String s) {
 		
-		    ottimaMultipla.equals(s);
+		    ottimaMultipla=s;
 	}
 	
 	//------------------------------------------------------------------
 	public void setSolOttimaDeg(String s) {
 		
-		    ottimaDegenere.equals(s);
+		    ottimaDegenere=s;
 	}
 	
 	//------------------------------------------------------------------
-	public void setFObbDuale(int i) {
+	public void setFObbDuale(double i) {
 		
 		    valFObbDuale=i;
 	}
 	
 	//------------------------------------------------------------------
-	public void setSolBaseOttimDual(int i) {
+	public void setSolBaseOttimDual(double i) {
 		
 		    solBaseOttimaDuale.add(i);
 		
 	}
 	
 	//------------------------------------------------------------------
-	public void setUpSens(int i) {
+	public void setUpSens(double i) {
 		
 	        sensUp=i;	
 	}
 	
 	//------------------------------------------------------------------
-	public void setLowSens(int i) {
+	public void setLowSens(double i) {
 		
 		    sensLow=i;
 	}
 	
 	//------------------------------------------------------------------
-	public void setBaseOttMultip(int i) {
+	public void setBaseOttMultip(double i) {
 		
 		    solBaseOttiMult.add(i);
 	}
 	
 	//------------------------------------------------------------------
-	public void setBaseDualAssoc(int i) {
+	public void setBaseDualAssoc(double i) {
 		
 		    solBaseDualeAsso.add(i);
 	}
@@ -133,6 +136,7 @@ public class PrintData {
 		
 		try {
 		
+			reader = new BufferedReader(new FileReader("spiegazione.txt"));
 			OutputStreamWriter writer = new OutputStreamWriter(
             new FileOutputStream("risposte_gruppo"+numGruppo+".txt"), "UTF-8");
 		
@@ -146,14 +150,17 @@ public class PrintData {
             bufWriter.newLine();
             
             bufWriter.write("QUESITO I:");
+            bufWriter.newLine();
             dQuesito1();
             doppioSpazio();
             
             bufWriter.write("QUESITO II:");
+            bufWriter.newLine();
             dQuesito2();
             doppioSpazio();
             
             bufWriter.write("QUESITO III:");
+            bufWriter.newLine();
             dQuesito3();
  
             bufWriter.close();
@@ -182,6 +189,7 @@ public class PrintData {
 	
 	private void dQuesito1() {
 		int i=0;
+		String line="";
 		
 		try {
 			
@@ -201,6 +209,13 @@ public class PrintData {
 			bufWriter.write("soluzione ottima degenere: "+ ottimaDegenere);
 			bufWriter.newLine();
 			bufWriter.write("motivazione: ");
+			bufWriter.newLine();
+			line = reader.readLine();
+			while(line!=null) {
+			     bufWriter.write(line);
+			     bufWriter.newLine();
+			     line = reader.readLine();
+			}
 				
 		}catch(Exception e) {
 			
