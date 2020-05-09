@@ -916,3 +916,57 @@ Iteration    Objective       Primal Inf.    Dual Inf.      Time
 
 Solved in 6 iterations and 0.00 seconds
 Optimal objective  1.404400000e+02
+
+Gurobi 9.0.1 (win64, Java) logging started 05/09/20 19:14:45
+
+Academic license - for non-commercial use only
+Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (win64)
+Optimize a model with 7 rows, 8 columns and 20 nonzeros
+Model fingerprint: 0x6f7dbc50
+Coefficient statistics:
+  Matrix range     [1e+00, 7e+00]
+  Objective range  [1e+00, 1e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+01]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0   -0.0000000e+00   0.000000e+00   5.500000e+01      0s
+       5    1.4044000e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 5 iterations and 0.00 seconds
+Optimal objective  1.404400000e+02
+
+Gurobi 9.0.1 (win64, Java) logging started 05/09/20 19:15:55
+
+Academic license - for non-commercial use only
+Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (win64)
+Optimize a model with 8 rows, 7 columns and 20 nonzeros
+Model fingerprint: 0xd25d605a
+Coefficient statistics:
+  Matrix range     [1e+00, 7e+00]
+  Objective range  [1e+00, 1e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+01]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   6.875000e+00   3.374971e+06      0s
+       6    1.4044000e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 6 iterations and 0.00 seconds
+Optimal objective  1.404400000e+02
+
+Gurobi 9.0.1 (win64, Java) logging started 05/09/20 19:40:59
+
+Academic license - for non-commercial use only
+Gurobi Optimizer version 9.0.1 build v9.0.1rc0 (win64)
+Optimize a model with 7 rows, 8 columns and 20 nonzeros
+Model fingerprint: 0x6f7dbc50
+Coefficient statistics:
+  Matrix range     [1e+00, 7e+00]
+  Objective range  [1e+00, 1e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [1e+00, 1e+01]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0   -0.0000000e+00   0.000000e+00   5.500000e+01      0s
+       5    1.4044000e+02   0.000000e+00   0.000000e+00      0s
+
+Solved in 5 iterations and 0.00 seconds
+Optimal objective  1.404400000e+02

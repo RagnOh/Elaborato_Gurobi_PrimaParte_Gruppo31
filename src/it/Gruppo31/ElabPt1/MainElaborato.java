@@ -182,6 +182,11 @@ public class MainElaborato {
 			p1.setFObbDuale(funzioneObiettivo);
 			
 			
+			System.out.println("low "+x7.get(GRB. DoubleAttr . SAObjLow)+ "  up"+ x7.get (GRB. DoubleAttr . SAObjUp));
+			
+			p1.setLowSens(x7.get(GRB. DoubleAttr . SAObjLow));
+			p1.setUpSens(x7.get (GRB. DoubleAttr . SAObjUp));
+			
 			p1.stampaDati();
 			
 			

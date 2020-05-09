@@ -18,7 +18,7 @@ ciaone;
 QUESITO II:
 funzione obbiettivo duale = 140.44
 soluzione di base ottima duale: 9.4, 6.4399999999999995, -2.0, 0.0, 0.0, 4.8, 0.0, -0.0, 0.0, -0.0, -0.0, 14.32, -0.0, 21.799999999999997, 32.76, 
-sensitività: 0.0<= DELTA <=0.0
+sensitività: -1.0E100<= DELTA <=20.799999999999997
 
 QUESITO III:
 soluzione di base ottima multipla :
