@@ -1,3 +1,2 @@
-ciao come va
-ciao
-ciaone;
+Nella soluzione ottima vi e' una variabile fuori base con coefficiente di costo ridotto pari a zero quindi abbiamo una soluzione ottima multipla. 
+Se avessimo avuto una variabile in base con valore zero allora la soluzione sarebbe stata degenere, ma qui non accade.

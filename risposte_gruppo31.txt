@@ -4,23 +4,21 @@ Componenti: Trovato Eleonora,  Ragnoli Michele
 
 QUESITO I:
 funzione obbiettivo = 140.44
-soluzione di base ottima = 2.65, 0.0, 13.656666666666666, 4.71, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 23.9, 0.0, 32.31333333333333, 
+soluzione di base ottima = 2.65, 0.0, 13.6566, 4.71, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 23.9, 0.0, 32.3133, 
 variabili in base:1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 
-coefficenti di costo ridotto:0.0, -0.0, 0.0, 0.0, -14.32, 0.0, -21.799999999999997, -32.76, -9.4, -6.4399999999999995, 2.0, -0.0, -0.0, -4.8, -0.0, 
-soluzione ottima multipla: null
+coefficenti di costo ridotto:0.0, -0.0, 0.0, 0.0, -14.32, 0.0, -21.8, -32.76, -9.4, -6.4399, -2.0, -0.0, -0.0, -4.8, -0.0, 
+soluzione ottima multipla: Si
 soluzione ottima degenere: NO
-motivazione: 
-ciao come va
-ciao
-ciaone;
+motivazione: Nella soluzione ottima vi e' una variabile fuori base con coefficiente di costo ridotto pari a zero quindi abbiamo una soluzione ottima multipla. 
+Se avessimo avuto una variabile in base con valore zero allora la soluzione sarebbe stata degenere, ma qui non accade.
 
 
 QUESITO II:
 funzione obbiettivo duale = 140.44
-soluzione di base ottima duale: 9.4, 6.4399999999999995, -2.0, 0.0, 0.0, 4.8, 0.0, -0.0, 0.0, -0.0, -0.0, 14.32, -0.0, 21.799999999999997, 32.76, 
-sensitività: -1.0E100<= DELTA <=20.799999999999997
+soluzione di base ottima duale: 9.4, 6.4399, 2.0, 0.0, 0.0, 4.8, 0.0, -0.0, 0.0, -0.0, -0.0, 14.32, -0.0, 21.8, 32.76, 
+sensitività: -1.0E100<= DELTA <=20.7999
 
 QUESITO III:
-soluzione di base ottima multipla :2.65, 3.414285714285714, 11.38047619047619, 4.71, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 0.0, 0.0, 27.76095238095238, 
+soluzione di base ottima multipla :2.65, 3.4142, 11.3804, 4.71, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 0.0, 0.0, 27.7609, 
 soluzione di base duale associata : NON CALCOLATO
 soluzione di base duale associata è ammissibile: NON CALCOLATO

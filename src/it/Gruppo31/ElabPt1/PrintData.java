@@ -211,7 +211,7 @@ public class PrintData {
 			bufWriter.write("soluzione ottima degenere: "+ ottimaDegenere);
 			bufWriter.newLine();
 			bufWriter.write("motivazione: ");
-			bufWriter.newLine();
+			
 			line = reader.readLine();
 			while(line!=null) {
 			     bufWriter.write(line);

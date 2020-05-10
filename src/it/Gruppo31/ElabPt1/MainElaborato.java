@@ -16,6 +16,7 @@ public class MainElaborato {
 	     
 	        private static double funzioneObiettivo;                              //salvo la funzione obbiettivo alla prima ottimizzazione, utile per l' ottimo multiplo
 	     
+	        private static int nVincoli=7;
 	        //----------------------------------------------------------------------------------------------------
 	     
 	        
@@ -87,13 +88,13 @@ public class MainElaborato {
 			
 			//terzo vincolo e' -2x2-3x3+7x4-x5+4x7-7x8>=-8
 			expr=new GRBLinExpr();
-			expr.addTerm(-2.0,x2);
-			expr.addTerm(-3.0,x3);
-			expr.addTerm(7.0, x4);
-			expr.addTerm(-1.0,x5);
-			expr.addTerm(4.0,x7);
-			expr.addTerm(-7.0, x8);
-			GRBConstr c2=model.addConstr(expr,GRB.GREATER_EQUAL,-8.0,"c2");
+			expr.addTerm(2.0,x2);
+			expr.addTerm(3.0,x3);
+			expr.addTerm(-7.0, x4);
+			expr.addTerm(1.0,x5);
+			expr.addTerm(-4.0,x7);
+			expr.addTerm(7.0, x8);
+			GRBConstr c2=model.addConstr(expr,GRB.LESS_EQUAL,8.0,"c2");
 			
 			//-------------------------------------------------------------------------------------------------------------------------------
 			
@@ -130,6 +131,7 @@ public class MainElaborato {
 			
 			//-------------------------------------------------------------------------------------------------------------------------------
 			
+			//risolvo primo e secondo quesito
 			//ora risolvo
 			model.optimize();
 			
@@ -139,126 +141,195 @@ public class MainElaborato {
 	
 			//-------------------------------------------------------------------------------------------------------------------------------
 			
+			//In caso di nessuna modifica succssiva rimarrà così
+			p1.setSolOttimaDeg("NO");
+			p1.setSolOttMult("NO");
+			
 			//stampo risultati variabili e slack
 			stampaRisult(model);
-			
-		
-			p1.setSolOttimaDeg("NO");
 			
 			//--------------------------------------------------------------------------------------------------------------------------------
 			
 			//voglio valore f.o.
 			 funzioneObiettivo=model.get(DoubleAttr.ObjVal);
 			System.out.println("Valore f.o: "+funzioneObiettivo);
+			
+			//aggiungo i due valori alla classe di stampa
 			p1.setFObbiettivo(funzioneObiettivo);
 			p1.setFObbDuale(funzioneObiettivo);
 			
+			//--------------------------------------------------------------------------------------------------------------------------------
 			
+			//stampo i limiti di sensitività del settimo vincolo del duale
 			System.out.println("low "+x7.get(GRB. DoubleAttr . SAObjLow)+ "  up"+ x7.get (GRB. DoubleAttr . SAObjUp));
 			
+			//aggiungo i valori della sensitivitò 
 			p1.setLowSens(x7.get(GRB. DoubleAttr . SAObjLow));
-			p1.setUpSens(x7.get (GRB. DoubleAttr . SAObjUp));
+			p1.setUpSens((Math.floor(10000*x7.get (GRB. DoubleAttr . SAObjUp)))/10000);
 			
+			//--------------------------------------------------------------------------------------------------------------------------------
+			
+			//Quesito 3, cerco la soluzione ottima.
 			cercaSolOttima2(model);
 			
-			p1.stampaDati();
+			//--------------------------------------------------------------------------------------------------------------------------------
 			
+			//stampo il file .txt con i dati
+			p1.stampaDati();
 			
 			
 			} catch (GRBException e) {
 				
 				e.printStackTrace();
 			}
-	}
-		
-		
-		public static void stampaRisult(GRBModel model ) {
 			
+	        }
+		
+		
+		    //-----------------------------------------------------------------------------------------------------------------------------------
+		    
+		    //stampo i valori del primo e secondo quesito
+		    //funzione per stampare ed inserire nel file .txt i valori del primo e secondo quesito
+		    public static void stampaRisult(GRBModel model ) {
+			
+		    	int conteggiovar=0;
+		    	int conteggioconstr=0;
+		    	int sommaTotVarbase=0;
+		    	
 			try {
+				
+				
+				for(GRBVar varb : model.getVars()) {
+					if(varb.get(DoubleAttr.X)>0.0)
+				conteggiovar++;}
+				
+				for(GRBConstr constrb : model.getConstrs()) {
+					if(constrb.get(DoubleAttr.Slack)>0.0)
+				conteggioconstr++;}
+				
+				sommaTotVarbase=conteggioconstr+conteggiovar;
+				
+				System.out.println("val"+sommaTotVarbase);
 			//voglio vedere valori var 
 			for(GRBVar var : model.getVars()) {
 				
-				System.out.println("Variabile: "+var.get(StringAttr.VarName)
+				System.out.print("Variabile: "+var.get(StringAttr.VarName)                                     //stampo nome, valore e coefficente di costo ridotto della variabile
 				+" valore: "+var.get(DoubleAttr.X)+" CRR: "+var.get(DoubleAttr.RC) );
 				
-				p1.setSolBaseOttima(var.get(DoubleAttr.X));
+				p1.setSolBaseOttima((Math.floor(10000*var.get(DoubleAttr.X)))/10000);                                                      //aggiungo valore variabile all' ottimo a file .txt
 				
-				
-				if((var.get(DoubleAttr.RC)==0.0)&& (var.get(DoubleAttr.X)!=0.0)) {
+			//---------------------------------------------------------------------------------------------------------------------------	
+				if((var.get(DoubleAttr.X)>0.0)) {                                                                //verifico se la variabile sia in base
 					
-					p1.setVarInBase(1);
-					varInBase.add(1);
+				
+    					p1.setVarInBase(1);                                                                          //scrivo 1 nel file .txt se variabile di slack è in base 
+    					varInBase.add(1);
+    					
+    				
 				}
+				
+				
+				else if ((sommaTotVarbase<nVincoli)&&(var.get(DoubleAttr.X)==0)&&(var.get(DoubleAttr.RC)==0.0)) {
+    					 
+    					 p1.setSolOttimaDeg("SI");
+    					 p1.setVarInBase(1);                                                                          //scrivo 1 nel file .txt se variabile di slack è in base 
+    						varInBase.add(1);                                                                         //array di supporto per verificare var in base
+    				 }                                                                        
+				
 				else {
-					if((var.get(DoubleAttr.RC)==0.0)&& (var.get(DoubleAttr.X)==0.0)) p1.setSolOttimaDeg("Si");
-				
-				 p1.setVarInBase(0);
-				 varInBase.add(0);
+					
+					if( (var.get(DoubleAttr.RC)==0.0)&&(var.get(DoubleAttr.X)==0)) p1.setSolOttMult("Si"); 
+				    
+				    p1.setVarInBase(0);                                                                          //se non in base scrivo 0 nel file .txt
+				    varInBase.add(0);                                                                            //array di supporto per verificare var in base 
 				}
+			//----------------------------------------------------------------------------------------------------------------------------	
 				
-				p1.setCoeffCosto(var.get(DoubleAttr.RC));
+				    p1.setCoeffCosto((Math.floor(10000*var.get(DoubleAttr.RC)))/10000);                                                    //aggiungo valore coefficente di costo ridotto a file .txt
 				
 			}
+			
+			
+			
 			
 			
 			//voglio vedere valori vincoli
 			for(GRBConstr constr : model.getConstrs()) {
-				System.out.println("Vincolo: "+constr.get(StringAttr.ConstrName)
+				
+				System.out.println("Vincolo: "+constr.get(StringAttr.ConstrName)                                 //stampo nome, valore e prezzo ombra della slack
 				+" slack: "+constr.get(DoubleAttr.Slack)+" prezzo ombra: "+
 						constr.get(DoubleAttr.Pi));
 				
-				p1.setSolBaseOttima(constr.get(DoubleAttr.Slack));
-				p1.setSolBaseOttimDual(constr.get(DoubleAttr.Pi));
-				
-                  if((constr.get(DoubleAttr.Pi)==0.0)&& (constr.get(DoubleAttr.Slack)!=0.0)) {
+				p1.setSolBaseOttima((Math.floor(10000*constr.get(DoubleAttr.Slack)))/10000);
+				p1.setSolBaseOttimDual((Math.floor(10000*constr.get(DoubleAttr.Pi)))/10000);                                               //in questo caso ho calcolato il prezzo ombra delle variabili del duale (non di slack) che corrisponde al valore dei coefficenti di costo ridotto delle variabili di slack del primale con segno opposto
+			
+				//------------------------------------------------------------------------------------------
+                if(constr.get(DoubleAttr.Slack)>0.0) {
 					
-					p1.setVarInBase(1);
-					varInBase.add(1);
-				}
-                  else {
-                	  if ((constr.get(DoubleAttr.Pi)==0.0)&& (constr.get(DoubleAttr.Slack)==0.0)) p1.setSolOttimaDeg("Si");//da sistemare
+                	
+    				
+    					p1.setVarInBase(1);                                                                          //scrivo 1 nel file .txt se variabile di slack è in base 
+    					varInBase.add(1); 
+    				}
+                else if ((sommaTotVarbase<nVincoli)&&(constr.get(DoubleAttr.Pi)==0.0)) {
+    					 
+    					 p1.setSolOttimaDeg("SI");
+    					 p1.setVarInBase(1);                                                                          //scrivo 1 nel file .txt se variabile di slack è in base 
+    						varInBase.add(1); 
+    				 }
+                	
+					                                                                           //scrivo 1 in vettore variabili in base se variabile di slack è in base
+				
+                else {
+                	  
+                	if (constr.get(DoubleAttr.Pi)==0.0) p1.setSolOttMult("Si");//da sistemare
                   
-				 p1.setVarInBase(0);
-				 varInBase.add(0);
+				    p1.setVarInBase(0);                                                                           //scrivo 0 nel file .txt se variabile di slack non è in base 
+				    varInBase.add(0);                                                                             //scrivo 1 in vettore variabili in base se variabile di slack è in base
                   
-                  }
-                  p1.setCoeffCosto((-1.0)*constr.get(DoubleAttr.Pi));
+                }
+                //-------------------------------------------------------------------------------------------
+                
+                p1.setCoeffCosto((-1.0)*((Math.floor(10000* constr.get(DoubleAttr.Pi)))/10000));
 			}
 			
+			//creato per stampare prima queste nel duale in modo da avere un ordine corretto
 			for(GRBVar var : model.getVars()) {
 				
-				p1.setSolBaseOttimDual((-1)*var.get(DoubleAttr.RC));
+				p1.setSolBaseOttimDual((-1)*((Math.floor(10000 * var.get(DoubleAttr.RC)))/10000));                                              //le variabili di slack del duale corrispondono ai coefficenti di costo ridotto delle variabili del primale cambiate di segno 
 			}
 			
 			
-		}catch(GRBException exc) {
-			exc.printStackTrace();
-		}
-	}
-		
-		
-		
-		public static void cercaSolOttima2(GRBModel model) {
+		    }catch(GRBException exc) {
+			 exc.printStackTrace();
+		    }
 			
-			int contatore =0;
+	        }
+		
+		    //----------------------------------------------------------------------------------------------------------------------------
+		
+		    //funzione per risolvere terzo quesito
+		    public static void cercaSolOttima2(GRBModel model) {
+			
+			int contatore = 0;//variabile di supporto per accedere ad array variabili in base
 			
 			try {
 				
-				
+				//azzero le variabili per metterle in base e verificare la soluzione
 				for (GRBVar v : model.getVars())
 		        {
 					
 					if(varInBase.get(contatore)==1) {
-		        	v.set(GRB.DoubleAttr.UB, 0.0);
+		        	
+					v.set(GRB.DoubleAttr.UB, 0.0);
 		        	model.optimize();
 		        	System.out.println("\nFunzione obiettivo: " +  model.get(DoubleAttr.ObjVal)+ " ");
 		                       	
-		        	 //Qui aggiungete la condizione se l'array di variabili di base nuovo è diverso da quello vecchio e se la funzione obiettivo è la stessa allora stampa
 		        	
-		        	if(model.get(DoubleAttr.ObjVal)==funzioneObiettivo) {
-		        		
+		        	if(model.get(DoubleAttr.ObjVal)==funzioneObiettivo) {                                        //controllo se il nuovo modello ha la stessa funzione obbiettivo
+ 		        		 
 		        		System.out.println(v.get(StringAttr.VarName));
-		        		stampaSol2(model);
+		        		stampaSol2(model);                                                                      //stampo i valori della nuova soluzione
 		        	}
 		            
 		        	v.set(GRB.DoubleAttr.UB, GRB.INFINITY);
@@ -269,18 +340,16 @@ public class MainElaborato {
 		        }
 			
 				contatore =8;
-		        System.out.println("ORA AZZERO LE SLACK \n\n\n\n");
+		        
+				//Azzero le slack per metterle in base e verificare la soluzione
 		        for (GRBConstr c : model.getConstrs())
 		        {
 		        	
 		        	System.out.println(c.get(StringAttr.ConstrName));
 		        	if (varInBase.get(contatore)==1) {
-		        	c.set(GRB.CharAttr.Sense, GRB.EQUAL);
+		        	c.set(GRB.CharAttr.Sense, GRB.EQUAL);                                          //metto in base
 		        	
 		        	model.optimize();
-		        	
-
-		        	
 		        	
 
 		        	try {
@@ -295,17 +364,13 @@ public class MainElaborato {
 		            
 		        	}catch(GRBException e) {
 		        		contatore++;
-		        		if(c.get(StringAttr.ConstrName).equals("c2"))
-				            c.set(GRB.CharAttr.Sense, GRB.GREATER_EQUAL);
 				            
-				            else c.set(GRB.CharAttr.Sense, GRB.LESS_EQUAL); 
+				             c.set(GRB.CharAttr.Sense, GRB.LESS_EQUAL); 
 		            	System.out.println(c.get(StringAttr.ConstrName));
 		        		continue;
 		        	}
-		            if(c.get(StringAttr.ConstrName).equals("c2"))
-		            c.set(GRB.CharAttr.Sense, GRB.GREATER_EQUAL);
 		            
-		            else c.set(GRB.CharAttr.Sense, GRB.LESS_EQUAL); 
+		             c.set(GRB.CharAttr.Sense, GRB.LESS_EQUAL);                          //reimposto come prima
 		            
 		            System.out.println("\n\n\n\n\n");
 		            contatore ++;
@@ -324,8 +389,9 @@ public class MainElaborato {
 			
 		}
 		
+		//----------------------------------------------------------------------------------------------------------------------------------------------------
 		
-		
+		    //stampo soluzioni seconda soluzione ottima e li aggiungo al file .txt
 		public static void stampaSol2(GRBModel model) {
 			try {
 				for(GRBVar var : model.getVars()) {
@@ -333,7 +399,7 @@ public class MainElaborato {
 					System.out.println("Variabile: "+var.get(StringAttr.VarName)
 					+" valore: "+var.get(DoubleAttr.X)+" CRR: "+var.get(DoubleAttr.RC) );
 					
-					p1.setBaseOttMultip(var.get(DoubleAttr.X));
+					p1.setBaseOttMultip((Math.floor(10000*var.get(DoubleAttr.X)))/10000);
 				}
 				
 				for(GRBConstr constr : model.getConstrs()) {
@@ -342,13 +408,14 @@ public class MainElaborato {
 							constr.get(DoubleAttr.Pi));
 					
 					
-					p1.setBaseOttMultip(constr.get(DoubleAttr.Slack));
+					p1.setBaseOttMultip((Math.floor(10000*constr.get(DoubleAttr.Slack)))/10000);
 		            
 				}
-	}
-	catch(GRBException e) {
-		e.printStackTrace();
-	}
+				
+	          
+			  }catch(GRBException e) {
+		       e.printStackTrace();
+	            }
 			
 		}
 		
