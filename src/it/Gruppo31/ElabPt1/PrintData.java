@@ -197,9 +197,11 @@ public class PrintData {
 			bufWriter.newLine();
 			bufWriter.write("soluzione di base ottima = ");
 			for(i=0;i<solBaseOttima.size();i++)bufWriter.write(solBaseOttima.get(i)+", ");
+			System.out.println("dimensione1="+solBaseOttima.size());
 			bufWriter.newLine();
 			bufWriter.write("variabili in base:");
 			for(i=0;i<varDiBase.size();i++)bufWriter.write(varDiBase.get(i)+", ");
+			System.out.println("dimensione="+varDiBase.size());
 			bufWriter.newLine();
 			bufWriter.write("coefficenti di costo ridotto:");
 			for(i=0;i<coeffCostoRidotto.size();i++)bufWriter.write(coeffCostoRidotto.get(i)+", ");
@@ -252,10 +254,15 @@ public class PrintData {
 			bufWriter.write("soluzione di base ottima multipla :");
 			for(i=0;i<solBaseOttiMult.size();i++)bufWriter.write(solBaseOttiMult.get(i)+", ");
 			bufWriter.newLine();
+			
 			bufWriter.write("soluzione di base duale associata :");
-			for(i=0;i<solBaseDualeAsso.size();i++)bufWriter.write(solBaseDualeAsso.get(i)+", ");
+			
+			if(solBaseDualeAsso.isEmpty())bufWriter.write(" NON CALCOLATO") ;
+			else for(i=0;i<solBaseDualeAsso.size();i++)bufWriter.write(solBaseDualeAsso.get(i)+", ");
 			bufWriter.newLine();
-			bufWriter.write("soluzione di base duale associata è ammissibile: "+ solBaseAssoAmmis);
+			
+			if(solBaseAssoAmmis==null)bufWriter.write("soluzione di base duale associata è ammissibile:"+" NON CALCOLATO") ;	
+			else bufWriter.write("soluzione di base duale associata è ammissibile: "+ solBaseAssoAmmis);
 			
 			
 		}   catch(Exception e) {
